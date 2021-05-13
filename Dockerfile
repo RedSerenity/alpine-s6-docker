@@ -15,7 +15,7 @@ LABEL s6_version="${S6_VERSION}"
 ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_VERSION}/s6-overlay-amd64.tar.gz /tmp/
 
 RUN set -xe && \
-	apk add --no-cache bash
+	apk add --no-cache bash && \
 	tar xzf /tmp/s6-overlay-amd64.tar.gz -C / && \
 	rm -Rf /tmp/*
 
