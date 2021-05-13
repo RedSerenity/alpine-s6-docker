@@ -51,13 +51,9 @@ jobs:
         with:
           images: ${{ env.DOCKERHUB_IMAGE }}
           tags: |
-            # Alpine Major
             type=match,pattern=v(\d+)\.\d+\.\d+-\d+\.\d+\.\d+\.\d+,group=1
-            # Alpine Major.Minor
             type=match,pattern=v(\d+\.\d+)\.\d+-\d+\.\d+\.\d+\.\d+,group=1
-            # Alpine Major.Minor.Patch
             type=match,pattern=v(\d+\.\d+\.\d+)-\d+\.\d+\.\d+\.\d+,group=1
-            # Full Version
             type=match,pattern=v(\d+\.\d+\.\d+-\d+\.\d+\.\d+\.\d+),group=1
             type=sha
           flavor: |
