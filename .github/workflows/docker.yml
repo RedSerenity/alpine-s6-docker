@@ -28,10 +28,18 @@ jobs:
             echo ::set-output name=valid-release::true
             echo ::set-output name=alpine-version::$ALPINE_VERSION
             echo ::set-output name=s6-version::$S6_VERSION
+
+            echo "Valid Release: true"
+            echo "Alpine Version: ${ALPINE_VERSION}"
+            echo "S6 Version: ${S6_VERSION}"
+          else
+            echo "Valid Release: false"
+            echo "Skipping tag: ${{ github.event.ref }}"
           fi
+
   docker:
     needs: version
-    if: ${{ needs.version.outpus.valid-release }} == 'true'
+    if: ${{ needs.version.outputs.valid-release }} == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -80,7 +88,9 @@ jobs:
           context: ./
           file: ./Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
-          build-args:
+          build-args: |
+            ALPINE_VERSION=${{ needs.version.outputs.alpine-version }}
+            S6_VERSION=${{ needs.version.outputs.s6-version }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
           push: ${{ github.event_name != 'pull_request' }}
