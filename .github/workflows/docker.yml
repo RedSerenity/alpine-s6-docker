@@ -61,7 +61,7 @@ jobs:
             type=match,pattern=v(\d+\.\d+\.\d+-\d+\.\d+\.\d+\.\d+),group=1
             type=sha
           flavor: |
-            latest: true
+            latest=true
 
 
       - name: Docker Info, Tags, & Labels
